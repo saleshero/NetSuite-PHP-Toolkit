@@ -36,7 +36,7 @@ class nsComplexObject
      *
      * @param array $fieldArray the array of fields to be set on the object
      */
-    function setFields(array $fieldArray=null)
+    function setFields(array $fieldArray = null)
     {
         if ($fieldArray == null)
         {
@@ -710,7 +710,7 @@ class nsCustomFieldList extends nsComplexObject
         parent::setFields($fields);
     }
 
-    function setFields (array $fields)
+    function setFields (array $fields = null)
     {
         if ( isset($fields["customField"]) && count($fields["customField"]) == 1)
         {
@@ -761,7 +761,7 @@ class nsPricingMatrix extends nsComplexObject
         parent::setFields($fields);
     }
 
-    function setFields (array $fields)
+    function setFields (array $fields = null)
     {
         if ( isset($fields["pricing"]) && count($fields["pricing"]) == 1)
         {
@@ -912,7 +912,7 @@ class nsPriceList extends nsComplexObject {
 
     }
 
-    function setFields (array $fields) {
+    function setFields (array $fields = null) {
 
         if ( isset($fields["price"]) && count($fields["price"]) == 1) {
 
@@ -947,7 +947,7 @@ class nsAddressbookList extends nsComplexObject {
 
     }
 
-    function setFields (array $fields) {
+    function setFields (array $fields = null) {
 
         if ( isset($fields["addressbook"]) && count($fields["addressbook"]) == 1) {
 
