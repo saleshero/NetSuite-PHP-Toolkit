@@ -2013,6 +2013,8 @@ function deserializeSimpleXML (SimpleXMLElement $record_element, $parent="", $na
 
 function getNameSpace($complexTypeName, $namespaces=null) {
 
+    global $myDirectory;
+
     if (strpos($complexTypeName, '/') === TRUE) {
         throw new Exception('ComplexTypeName cannot have "/"');
     }
