@@ -1648,7 +1648,7 @@ class nsClient {
 
             $xml = simplexml_load_string($Data, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-            $passwordFields = &$xml->xpath("//password | //password2 | //currentPassword | //newPassword | //newPassword2 | //ccNumber | //ccSecurityCode | //socialSecurityNumber");
+            $passwordFields = $xml->xpath("//password | //password2 | //currentPassword | //newPassword | //newPassword2 | //ccNumber | //ccSecurityCode | //socialSecurityNumber");
 
             foreach ($passwordFields as &$pwdField) {
 
@@ -1656,7 +1656,7 @@ class nsClient {
 
             }
 
-            $stringCustomFields = &$xml->xpath("//customField[@xsitype='StringCustomFieldRef']");
+            $stringCustomFields = $xml->xpath("//customField[@xsitype='StringCustomFieldRef']");
 
             foreach ($stringCustomFields as $field) {
 
