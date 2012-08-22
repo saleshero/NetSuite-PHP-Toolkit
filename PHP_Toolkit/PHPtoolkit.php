@@ -6,10 +6,11 @@
  * All rights reserved.
  */
 
-require_once __DIR__ . '/directory_v2011.2.php';
-
 global $myDirectory;
 global $endpoint;
+global $version;
+
+require_once __DIR__ . '/directory_v2011.2.php';
 
 $version = "2011_2r1";
 
