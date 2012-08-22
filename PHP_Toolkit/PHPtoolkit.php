@@ -6,7 +6,7 @@
  * All rights reserved.
  */
 
-require_once 'directory_v2011.2.php';
+require_once __DIR__ . '/directory_v2011.2.php';
 
 global $myDirectory;
 global $endpoint;
