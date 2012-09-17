@@ -289,34 +289,37 @@ class nsSessionResponse
             $this->statusDetail = getStatusDetail($sessionResponse->status->statusDetail);
         }
 
-        if (is_array($sessionResponse->wsRoleList->wsRole))
+        if ( isset($sessionResponse->wsRoleList->wsRole) )
         {
-            foreach ($sessionResponse->wsRoleList->wsRole as $wsRole)
+            if (is_array($sessionResponse->wsRoleList->wsRole))
+            {
+                foreach ($sessionResponse->wsRoleList->wsRole as $wsRole)
+                {
+                    $wsRoleNSObject = new nsComplexObject('WsRole');
+
+                    $wsRoleFields = array();
+                    $wsRoleFields['isDefault'] = $wsRole->isDefault;
+                    $wsRoleFields['isInactive'] = $wsRole->isInactive;
+                    $wsRoleFields['role'] = new nsRecordRef(array(  'internalId'    => $wsRole->role->internalId,
+                                                                    'name'          => $wsRole->role->name));
+
+                    $wsRoleNSObject->setFields($wsRoleFields);
+                    $this->wsRoleList[] = $wsRoleNSObject;
+                }
+            }
+            elseif (count($sessionResponse->wsRoleList->wsRole) > 0)
             {
                 $wsRoleNSObject = new nsComplexObject('WsRole');
 
                 $wsRoleFields = array();
-                $wsRoleFields['isDefault'] = $wsRole->isDefault;
-                $wsRoleFields['isInactive'] = $wsRole->isInactive;
-                $wsRoleFields['role'] = new nsRecordRef(array(  'internalId'    => $wsRole->role->internalId,
-                                                                'name'          => $wsRole->role->name));
+                $wsRoleFields['isDefault'] = $sessionResponse->wsRoleList->wsRole->isDefault;
+                $wsRoleFields['isInactive'] = $sessionResponse->wsRoleList->wsRole->isInactive;
+                $wsRoleFields['role'] = new nsRecordRef(array(  'internalId'    => $sessionResponse->wsRoleList->wsRole->role->internalId,
+                                                                'name'          => $sessionResponse->wsRoleList->wsRole->role->name));
 
                 $wsRoleNSObject->setFields($wsRoleFields);
                 $this->wsRoleList[] = $wsRoleNSObject;
             }
-        }
-        elseif (count($sessionResponse->wsRoleList->wsRole) > 0)
-        {
-            $wsRoleNSObject = new nsComplexObject('WsRole');
-
-            $wsRoleFields = array();
-            $wsRoleFields['isDefault'] = $sessionResponse->wsRoleList->wsRole->isDefault;
-            $wsRoleFields['isInactive'] = $sessionResponse->wsRoleList->wsRole->isInactive;
-            $wsRoleFields['role'] = new nsRecordRef(array(  'internalId'    => $sessionResponse->wsRoleList->wsRole->role->internalId,
-                                                            'name'          => $sessionResponse->wsRoleList->wsRole->role->name));
-
-            $wsRoleNSObject->setFields($wsRoleFields);
-            $this->wsRoleList[] = $wsRoleNSObject;
         }
     }
 }
@@ -1280,7 +1283,7 @@ class nsClient {
         return $writeResponseArray;
     }
 
-    function get(nsRecordRef $recordRef) {
+    function get($recordRef) {
 
         $getResponse = $this->makeCall("get", array(array('baseRef' => $recordRef->getSoapVar())));
 
