@@ -1,5 +1,4 @@
 <?php
-namespace NetSuiteService;
 
 if (!class_exists("RecordType")) {
 /**
