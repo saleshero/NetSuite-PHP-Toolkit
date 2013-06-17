@@ -1,4 +1,5 @@
 <?php
+namespace NetSuiteService;
 
 require "NSconfig.php";
 

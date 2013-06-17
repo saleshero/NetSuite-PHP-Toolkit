@@ -1,4 +1,5 @@
 <?php
+namespace NetSuiteService;
 
 require_once "NSPHPClient.php";
 
