@@ -1,8 +1,6 @@
 <?php
 namespace NetSuiteService;
 
-require "NSconfig.php";
-
 function arrayValuesAreEmpty ($array)
 {
     if (!is_array($array))
@@ -168,6 +166,13 @@ function cleanUpNamespaces($xml_root)
 }
 
 class NSPHPClient {
+    public $nsendpoint = "2013_1";
+    public $nshost = "https://webservices.netsuite.com";
+    public $nsemail = "jDoe@netsuite.com";
+    public $nspassword = "mySecretPwd";
+    public $nsrole = "3";
+    public $nsaccount = "MYACCT1";
+
     private $nsversion = "2012_2r1";    
 
     public $client = null;
@@ -177,20 +182,18 @@ class NSPHPClient {
     protected $classmap = null;
     public $generated_from_endpoint = "";
 
+    public $debuginfo;
 
     protected function __construct($wsdl=null, $options=array()) {
-        global $nshost, $nsendpoint;
-        global $nsaccount, $nsemail, $nsrole, $nspassword;
-        global $debuginfo;
 
         if (!isset($wsdl)) {
-             if (!isset($nshost)) {
+             if (!isset($this->nshost)) {
                 throw new \Exception('Webservice host must be specified');
              }
-             if (!isset($nsendpoint)) {
+             if (!isset($this->nsendpoint)) {
                 throw new \Exception('Webservice endpoint must be specified');
              }
-             $wsdl = $nshost . "/wsdl/v" . $nsendpoint . "_0/netsuite.wsdl";
+             $wsdl = $this->nshost . "/wsdl/v" . $this->nsendpoint . "_0/netsuite.wsdl";
         }
 
         if (!extension_loaded('soap')) {
@@ -205,9 +208,9 @@ class NSPHPClient {
             trigger_error($soap_warning, E_USER_WARNING);
         }
 
-        if ( $this->generated_from_endpoint != $nsendpoint ) {
+        if ( $this->generated_from_endpoint != $this->nsendpoint ) {
             // check for the endpoint compatibility failed, but it might still be compatible. Issue only warning
-            $endpoint_warning = 'The NetSuiteService classes were generated from the '.$this->generated_from_endpoint .' endpoint but you are running against ' . $nsendpoint;
+            $endpoint_warning = 'The NetSuiteService classes were generated from the '.$this->generated_from_endpoint .' endpoint but you are running against ' . $this->nsendpoint;
             trigger_error($endpoint_warning, E_USER_WARNING);
         }
 
@@ -217,7 +220,7 @@ class NSPHPClient {
         $options['cache_wsdl'] = WSDL_CACHE_BOTH;
         $httpheaders = "PHP-SOAP/" . phpversion() . " + NetSuite PHP Toolkit " . $this->nsversion;
 
-        $options['location'] = $nshost . "/services/NetSuitePort_" . $nsendpoint;
+        $options['location'] = $this->nshost . "/services/NetSuitePort_" . $this->nsendpoint;
         $options['keep_alive'] = false; // do not maintain http connection to the server.
         $options['features'] = SOAP_SINGLE_ELEMENT_ARRAYS;
 
@@ -228,11 +231,11 @@ class NSPHPClient {
         );
         //$options['stream_context'] = stream_context_create($context);
 
-        if (isset($debuginfo)) {
+        if (isset($this->debuginfo)) {
             $httpheaders .= "\r\nDebug: true";
-            $httpheaders .= "\r\nUser: " . $debuginfo["email"];
-            $httpheaders .= "\r\nPassword: " . $debuginfo["password"];
-            $httpheaders .= "\r\nIssue: " . $debuginfo["issue"];
+            $httpheaders .= "\r\nUser: " . $this->debuginfo["email"];
+            $httpheaders .= "\r\nPassword: " . $this->debuginfo["password"];
+            $httpheaders .= "\r\nIssue: " . $this->debuginfo["issue"];
         }
 
         $options['user_agent'] =  $httpheaders;
