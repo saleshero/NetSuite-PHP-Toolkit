@@ -185,10 +185,10 @@ class NSPHPClient {
 
         if (!isset($wsdl)) {
              if (!isset($nshost)) {
-                throw new Exception('Webservice host must be specified');
+                throw new \Exception('Webservice host must be specified');
              }
              if (!isset($nsendpoint)) {
-                throw new Exception('Webservice endpoint must be specified');
+                throw new \Exception('Webservice endpoint must be specified');
              }
              $wsdl = $nshost . "/wsdl/v" . $nsendpoint . "_0/netsuite.wsdl";
         }
