@@ -1,14 +1,5 @@
 <?php
 
-$nsendpoint = "2013_1";
-$nshost = "https://webservices.netsuite.com";
-
-$nsemail = "jDoe@netsuite.com";
-$nspassword = "mySecretPwd";
-$nsrole = "3";
-$nsaccount = "MYACCT1";
-
-
 function arrayValuesAreEmpty ($array)
 {
     if (!is_array($array))
