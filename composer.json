@@ -10,7 +10,7 @@
         "files": [
             "PHP_Toolkit/NSconfig.php",
             "PHP_Toolkit/NSPHPClient.php",
-            "PHP_Toolkit/NetSuiteService.php",
+            "PHP_Toolkit/NetSuiteService.php"
         ]
     }
 }
